@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useDispatch} from 'react-redux'
-import { addContact } from 'components/store' 
+import { addContact } from 'components/redux/store' 
 
 const ContactForm = () => {
   const dispatch = useDispatch()
