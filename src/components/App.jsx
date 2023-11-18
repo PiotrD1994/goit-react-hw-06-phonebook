@@ -24,14 +24,18 @@ const App = () => {
   }, [contacts])
 
   const handleSubmit = (data) => {
-    const chosenName = contacts.find((element) => element.name.toLowerCase().trim() === data.name.toLowerCase().trim())
-    if(chosenName) {
-      alert(chosenName.name + 'is already in contacts')
+    const chosenName = contacts.find(
+      (element) =>
+        element.name && element.name.toLowerCase() === data.name.toLowerCase()
+    );
+  
+    if (chosenName) {
+      alert(chosenName.name + ' is already in contacts');
     } else {
-      data.id = nanoid()
-      dispatch(saveContact(data))
+      data.id = nanoid();
+      dispatch(saveContact(data));
     }
-  }
+  };
   const changeFilter = (event) => {
     dispatch(refreshFilter(event.currentTarget.value))
   }
@@ -57,7 +61,7 @@ const App = () => {
       </div>
       <div>
         <h2 className={css.header}>Contacts</h2>
-        {contacts.length > 0 ? (
+        {contacts && contacts.length > 0 ? (
           <Filter value={filter} onChange={changeFilter} />
         ) : (
           <span>Your phonebook is empty. Add your first contact!</span>
