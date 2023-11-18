@@ -36,9 +36,15 @@ const App = () => {
     dispatch(refreshFilter(event.currentTarget.value))
   }
   const getVisibleContacts = () => {
-    const normalizedFilter = filter.toLowerCase()
-    return contacts.filter((contact) => contact.name.toLowerCase().includes(normalizedFilter))
-  }
+    const normalizedFilter = filter ? filter.toLowerCase() : '';
+    return contacts
+      ? contacts.filter(
+          (contact) =>
+            contact.name &&
+            contact.name.toLowerCase().includes(normalizedFilter)
+        )
+      : [];
+  };
   const handleRemoveContact = (contactID) => {
     dispatch(removeContact(contactID))
   }
