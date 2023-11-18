@@ -24,7 +24,7 @@ const App = () => {
   }, [contacts])
 
   const handleSubmit = (data) => {
-    const chosenName = contacts.find((element) => element.name.toLowerCase() === data.name.toLowerCase())
+    const chosenName = contacts.find((element) => element.name.toLowerCase().trim() === data.name.toLowerCase().trim())
     if(chosenName) {
       alert(chosenName.name + 'is already in contacts')
     } else {
