@@ -61,7 +61,7 @@ const App = () => {
       </div>
       <div>
         <h2 className={css.header}>Contacts</h2>
-        {contacts && contacts.length > 0 ? (
+        {contacts.length > 0 ? (
           <Filter value={filter} onChange={changeFilter} />
         ) : (
           <span>Your phonebook is empty. Add your first contact!</span>
