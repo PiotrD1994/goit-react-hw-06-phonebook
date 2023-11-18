@@ -1,39 +1,65 @@
-import React, {useState} from 'react'
-import {useDispatch} from 'react-redux'
-import { addContact } from 'components/redux/store' 
+import React, {useState} from "react";
+import { useDispatch } from "react-redux";
+import { nanoid } from "nanoid";
+import { saveContact } from "components/redux/contactSlice";
+import css from './contactForm.module.css'
 
-const ContactForm = () => {
+function ContactForm() {
   const dispatch = useDispatch()
-  const [formData, setFormData] = useState({ name:'', number:''})
+  const [formData, setFormData] = useState({
+    name:'',
+    number:'',
+})
+
+  const nameInputId= nanoid()
+  const numberInputId = nanoid()
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    dispatch(addContact(formData))
-    setFormData({name:'', number:''})
-  }
+    event.preventDefault() 
+ dispatch(saveContact({id: nanoid(), ...formData}))
+  reset()
+}
+
   const handleChange = (event) => {
     const {name, value} = event.target
-    setFormData({...formData, [name]:value})
+    setFormData((prevData) => ({...prevData, [name]: value}))
   }
+  const reset = () => {
+    setFormData({name:'', number:''})
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        placeholder="Name"
-      />
-      <input
-        type="text"
-        name="number"
-        value={formData.number}
-        onChange={handleChange}
-        placeholder="Number"
-      />
-      <button type="submit">Add Contact</button>
+    <form className={css.form} onSubmit={handleSubmit}>
+      <label className={css.label} htmlFor={nameInputId}>
+        Name
+        <input
+          className={css.input}
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+        />
+      </label>
+      <label className={css.label} htmlFor={numberInputId}>
+        Number
+        <input
+          className={css.input}
+          type="tel"
+          name="number"
+          value={formData.number}
+          onChange={handleChange}
+          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          required
+        />
+      </label>
+
+      <button className={css.button} type="submit">Add contact </button>
     </form>
-  );
+   )
 }
 
 export default ContactForm

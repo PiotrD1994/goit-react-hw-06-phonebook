@@ -1,23 +1,27 @@
 import React from "react";
 import PropTypes from 'prop-types'
 import css from './Filter.module.css'
-import{useDispatch} from 'react-redux'
-import { setFilter } from "components/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { refreshFilter } from "components/redux/contactSlice";
 
-
-const Filter = () => {
+function Filter() {
     const dispatch = useDispatch()
+    const filter = useSelector((state) => state.contacts.filter)
     const handleChange = (event) => {
-        dispatch(setFilter(event.target.value))
-        onChange(event.target.value)
+        dispatch(refreshFilter(event.currentTarget.value))
     }
     return(
+<div className={css.container}>
+      <h3 className={css.header}> Search Name</h3>
+      <label className={css.label}>
         <input
-        type="text"
-        value={value}
-        onChange={handleChange}
-        placeholder="Search contacts"
-      />
+          className={css.input}
+          type="text"
+          value={filter}
+          onChange={handleChange}
+        />
+      </label>
+    </div>
     )
 }
 
