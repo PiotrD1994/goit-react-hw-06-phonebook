@@ -11,6 +11,7 @@ const App = () => {
   const dispatch = useDispatch()
   const contacts = useSelector((state) => state.contacts.contacts)
   const filter = useSelector((state) => state.contacts.filter)
+  localStorage.clear()
 
   useEffect(() => {
     const storedContacts = localStorage.getItem('contacts')
